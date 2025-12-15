@@ -50,6 +50,7 @@
 - Projektaufgabe Anbindung Backend (Abgabe Freitag 9:00 Uhr)
 ### Donnerstag: 
 - Anbindung DummyJSON (Zitate) + Settings
+- Wissenscheck
 ### Freitag:
 - Review Anbindung Backend
 - Einbauen Streaks

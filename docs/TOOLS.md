@@ -9,7 +9,7 @@ Dieses Dokument bietet einen Überblick über alle Tools, Pakete und Technologie
 | Tool | Beschreibung | Link |
 |------|--------------|------|
 | **FVM** | Flutter Version Management - Verwaltet Flutter SDK Versionen pro Projekt | [fvm.app](https://fvm.app/) |
-| **Flutter DCL** | Dart code Linter - Statisches Analyse-Tool für Code-Qualität | [dcm.dev](https://dcl.apps.bancolombia.com/docs/getting-started) |
+| **Flutter DCL** | Dart code Linter - Statisches Analyse-Tool für Code-Qualität | [dcl.apps.bancolombia.com](https://dcl.apps.bancolombia.com/docs/getting-started) |
 
 ---
 
@@ -92,7 +92,7 @@ flutter pub get
 
 ---
 
-## 📁 Projektstruktur (Empfohlen)
+## 📁 Projektstruktur (wird in den folgenden Tagen noch verändert)
 
 ```
 lib/
@@ -111,16 +111,3 @@ lib/
 ```
 
 ---
-
-## 📚 Ressourcen
-
-- [Flutter Dokumentation](https://docs.flutter.dev/)
-- [Dart Dokumentation](https://dart.dev/guides)
-- [Riverpod Dokumentation](https://riverpod.dev/docs/introduction/getting_started)
-- [Hive CE Dokumentation](https://pub.dev/packages/hive_ce#readme)
-- [GoRouter Dokumentation](https://pub.dev/documentation/go_router/latest/)
-- [Freezed Dokumentation](https://pub.dev/packages/freezed#readme)
-- [Firebase Firestore Dokumentation](https://firebase.google.com/docs/firestore/quickstart)
-- [Dio Dokumentation](https://pub.dev/packages/dio#readme)
-- [FVM Dokumentation](https://fvm.app/docs/getting_started)
-- [DCM Dokumentation](https://dcm.dev/docs/)

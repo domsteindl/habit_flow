@@ -10,7 +10,7 @@ class ItemList extends StatelessWidget {
   });
 
   final List<Habit> items;
-  final void Function(int index, String newItem) onEdit;
+  final void Function(int index, Habit newItem) onEdit;
   final void Function(int index) onDelete;
 
   @override
@@ -51,7 +51,10 @@ class ItemList extends StatelessWidget {
                           TextButton(
                             child: const Text('Speichern'),
                             onPressed: () {
-                              onEdit(index, editController.text);
+                              final updatedHabit = Habit(
+                                name: editController.text,
+                              );
+                              onEdit(index, updatedHabit);
                               Navigator.of(context).pop();
                             },
                           ),

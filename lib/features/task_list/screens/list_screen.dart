@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:habit_flow/core/models/habit.dart';
-import 'package:habit_flow/core/services/hive_service.dart';
+import 'package:habit_flow/features/task_list/state/task_provider.dart';
 import 'package:habit_flow/features/task_list/widgets/empty_content.dart';
 import 'package:habit_flow/features/task_list/widgets/item_list.dart';
 
-class ListScreen extends StatefulWidget {
-  const ListScreen({super.key});
+class ListScreen extends ConsumerWidget {
+  ListScreen({super.key});
 
-  @override
-  State<ListScreen> createState() => _ListScreenState();
-}
-
-class _ListScreenState extends State<ListScreen> {
-  late final List<Habit> _items;
   final textController = TextEditingController();
-  int _selectedIndex = 0;
+  final selectedIndex = ValueNotifier<int>(0); // Optional für NavigationBar
 
   @override
-  void initState() {
-    super.initState();
-
-    _items = HiveService.getAllTasks();
-  }
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final items = ref.watch(taskListProvider);
     return Scaffold(
       appBar: AppBar(title: Center(child: const Text('Habit Flow'))),
       bottomNavigationBar: NavigationBarTheme(
@@ -44,7 +34,7 @@ class _ListScreenState extends State<ListScreen> {
           }),
         ),
         child: NavigationBar(
-          selectedIndex: _selectedIndex,
+          selectedIndex: selectedIndex.value,
           destinations: [
             NavigationDestination(icon: Icon(Icons.list), label: "Aufgaben"),
             NavigationDestination(
@@ -52,21 +42,28 @@ class _ListScreenState extends State<ListScreen> {
               label: "Statistik",
             ),
           ],
-          onDestinationSelected: (value) => setState(() {
-            _selectedIndex = value;
-          }),
+          onDestinationSelected: (value) => selectedIndex.value = value,
         ),
       ),
       body: SafeArea(
-        child: _items.isEmpty
+        child: items.isEmpty
             ? const EmptyContent()
             : Column(
                 children: [
                   Expanded(
                     child: ItemList(
-                      items: _items,
-                      onEdit: (index, newItem) {},
-                      onDelete: (index) {},
+                      items: items,
+                      onEdit: (index, newItem) async {
+                        //final habit = items[index];
+                        await ref
+                            .read(taskListProvider.notifier)
+                            .updateTask(index, newItem);
+                      },
+                      onDelete: (index) async {
+                        await ref
+                            .read(taskListProvider.notifier)
+                            .deleteTask(index);
+                      },
                     ),
                   ),
                   Padding(
@@ -77,7 +74,15 @@ class _ListScreenState extends State<ListScreen> {
                         hintText: "Task Hinzufügen",
                         suffixIcon: IconButton(
                           icon: Icon(Icons.add),
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (textController.text.isEmpty) return;
+
+                            final newHabit = Habit(name: textController.text);
+                            await ref
+                                .read(taskListProvider.notifier)
+                                .addTask(newHabit);
+                            textController.clear();
+                          },
                         ),
                       ),
                     ),

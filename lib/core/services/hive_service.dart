@@ -20,5 +20,9 @@ class HiveService {
 
   static Future<void> updateTask(int key, Habit habit) async =>
       await _taskBox.put(key, habit);
+
+  static Future<void> deleteTask(int index) async =>
+      await _taskBox.delete(index);
+      
   static Box<Habit> get petBox => _taskBox;
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:habit_flow/core/models/habit.dart';
+import 'package:habit_flow/core/services/hive_service.dart';
 import 'package:habit_flow/features/task_list/widgets/empty_content.dart';
 import 'package:habit_flow/features/task_list/widgets/item_list.dart';
 
@@ -10,9 +12,16 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  final List<String> _items = ["Test"];
+  late final List<Habit> _items;
   final textController = TextEditingController();
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _items = HiveService.getAllTasks();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
